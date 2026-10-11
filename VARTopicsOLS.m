@@ -1,0 +1,11 @@
+% OLS estimation of AR(p)
+function [para,res, sigm]=VARTopicsOLS(data,p)
+y=data(p+1:end,:);
+T=size(y,1);
+X=ones(T,1);
+for j=1:p
+    X=[X data(p+1-j:end-j,:)];
+end
+para=inv(X'*X)*X'*y;
+res=y-X*para;
+sigm = cov(res);
